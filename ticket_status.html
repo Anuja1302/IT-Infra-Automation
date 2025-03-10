@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceNow Ticket Result</title>
+    <style>
+        body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                scroll-behavior: smooth;
+                overflow-y: auto;
+                background-image: url({{ url_for('static', filename='create7_test8.png') }});
+                background-position: center;
+                background-size: 100% 100%;;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+
+            }
+
+<!--            h1 {-->
+<!--                color: #fff;-->
+<!--                position: fixed;-->
+<!--                top: 0;-->
+<!--                left: 50%;-->
+<!--                transform: translateX(-50%);-->
+<!--                background-color: rgba(25, 25, 112, 0.8);-->
+<!--                padding: 15px 20px;-->
+<!--                border-bottom: 2px solid #ddd;-->
+<!--                width: 100%;-->
+<!--                z-index: 1;-->
+<!--                text-align: center;-->
+<!--                margin: 0;-->
+<!--                border-radius: 0 0 8px 8px;-->
+<!--                font-size: 24px;-->
+<!--            }-->
+
+<!--            .container2 {-->
+<!--                border: 2px solid #3498db;-->
+<!--                background-color: #3498db;-->
+<!--                font-size: 36px;-->
+<!--                padding: 10px;-->
+<!--                border-radius: 6px;-->
+<!--                margin-bottom: 10px;-->
+<!--            }-->
+
+            .ticket-result2 {
+                border: 2px solid #fff;
+                background-color: rgba(255, 255, 255, 0.8);
+                font-size: 24px;
+                padding: 10px;
+                border-radius: 6px;
+                margin-bottom: 10px;
+            }
+
+            .Options {
+                box-sizing: border-box;
+                text-align: left;
+                word-wrap: break-word;
+                align-self: center;
+                position: relative;
+                margin-top: 10px;
+            }
+
+            input {
+                width: 700px;
+                height: 45px;
+                margin-left: 20px;
+                border-radius: 30px;
+                border: none;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                font-size: 16px;
+            }
+
+            button {
+                width: 200px;
+                height: 45px;
+                margin-left: 280px;
+                border-radius: 30px;
+                background-color: #008080;
+                border: none;
+                color: #fff;
+                font-size: 16px;
+                font-weight: bold;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            button:hover {
+                background-color: #0056b3; /* Change color on hover */
+            }
+
+            a.back {
+                font-weight: 100;
+                font-size: 14px; /* Adjust the font size */
+                margin-left: 10px; /* Adjust the margin */
+            }
+
+            .error-message {
+                color: #ff0000;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+    </style>
+</head>
+<body>
+<form action="/ticket_status" method="post">
+<!--    <h1>C.R.E.A.T.E</h1>-->
+
+    <div class="container2">
+    <div class="ticket-result2">
+        <label for="ticket_number">Ticket Number:</label><br>
+        <input type="text" name="ticket_number" id="ticket_number" required placeholder="Enter your ticket number" />
+        <!-- Add a line to display validation error -->
+        <div id="ticket_number_error" class="error-message"></div>
+        <br>
+
+        <!-- Display ticket creation result here -->
+    </div>
+
+    <!-- Add a link to return to the main page or wherever needed -->
+    <div class="Options">
+
+         <button type="submit" >Check Ticket Status</button>
+            <a href="/" class="back">Back-to-Home</a>
+
+    </div>
+
+    </div>
+
+</form>
+<script>
+    document.getElementById('ticket_number').addEventListener('input', function () {
+        validateTicketNumber();
+    });
+
+    function validateTicketNumber() {
+        var ticketNumber = document.getElementById('ticket_number').value;
+        var ticketNumberError = document.getElementById('ticket_number_error');
+        var ticketNumberRegex = /^[A-Z0-9]+$/;
+
+        if (ticketNumberRegex.test(ticketNumber)) {
+            ticketNumberError.innerHTML = '';
+        } else {
+            ticketNumberError.innerHTML = 'Please enter only uppercase letters and numbers';
+        }
+    }
+</script>
+</body>
+</html>
+

@@ -1,0 +1,32 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Result</title>-->
+<!--    <style>-->
+<!--        /* Your existing styles remain unchanged */-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Result</h1>-->
+<!--    <a href="/" class="back-button">Back</a>-->
+
+<!--    {% if response_data %}-->
+<!--        {% for entry in response_data %}-->
+<!--            <div class="result-card">-->
+<!--                {% for key, value in entry.items() %}-->
+<!--                    {% if key in ["Fuctional Specification", "Design & Pre requisites doc", "User/Deployment Guide", "Source Code path","Path"] %}-->
+<!--                        <p><strong>{{ key }}:</strong> <a href="{{ value }}" target="_blank">{{ value }}</a></p>-->
+<!--                    {% else %}-->
+<!--                        <p><strong>{{ key }}:</strong> {{ value }}</p>-->
+<!--                    {% endif %}-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        {% endfor %}-->
+<!--    {% else %}-->
+<!--        <p>No result available.</p>-->
+<!--    {% endif %}-->
+<!--</body>-->
+<!--</html>-->

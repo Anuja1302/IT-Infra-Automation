@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeployment_ticket</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            background-image: url({{ url_for('static', filename='create7_test8.png') }});
+            background-position: center;
+            background-size: 100% 100%;;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+<!--        h1 {-->
+<!--            color: #fff;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%);-->
+<!--            background-color: rgba(25, 25, 112, 0.5);-->
+<!--            padding: 15px 20px;-->
+<!--            border-bottom: 2px solid #ddd;-->
+<!--            width: 100%;-->
+<!--            z-index: 1;-->
+<!--            text-align: center;-->
+<!--            margin: 0;-->
+<!--            border-radius: 0 0 8px 8px;-->
+<!--            font-size: 24px;-->
+<!--        }-->
+        form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            box-sizing: border-box;
+            text-align: left;
+            word-wrap: break-word;
+            margin-top: 50px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-left:230px;
+            width: 40%;
+            height: 40px;
+            border-radius: 30px;
+            background-color: #008080;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back{
+        color: #cyan;
+        margin-left:360px;
+        margin-top:50px;
+        font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<!--    <h1>C.R.E.A.T.E</h1>-->
+
+    <form method="POST" action="/redeployemt_ticket" class="ticket-form" enctype="multipart/form-data">
+        <input type="hidden" name="form_token" value="{{ session.get('form_token', '') }}">
+        <label for="Bot_reference_ID" >Bot Reference ID:</label><br>
+        <input type="text" id="Bot_reference_ID" value="{{id_value}}" name="Bot_reference_ID" readonly>
+        <div id="BotreferenceIDer" class="error-message"></div>
+        <br>
+        <label for="short_description">Short Description:</label><br>
+        <input type="text" id="short_description" name="short_description" required pattern="[a-zA-Z0-9\s]+" title="Enter only letters and numbers"><br>
+        <!-- Add a line to display validation error -->
+        <div id="shortDescriptionError" class="error-message"></div>
+        <br>
+
+        <div id="description">
+        <label for="Demand Owner/Automation SPOC Name">1. Demand Owner/Automation SPOC Name:</label><br>
+        <input type="text" id="Demand Owner/Automation SPOC Name" name="1.Demand Owner/Automation SPOC Name" required pattern="[A-Za-z\s]+" title="Enter only letters"><br>
+        <!-- Add a line to display validation error -->
+        <div id="demandOwnerNameError" class="error-message"></div>
+        <br>
+
+        <label for="Demand_Owner_Automation_SPOC_E-mail_ID">2.Demand Owner/Automation SPOC E-mail ID:</label><br>
+        <input type="text" id="Demand_Owner_Automation_SPOC_E-mail_ID" name="2.Demand Owner/Automation SPOC E-mail ID" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Enter a valid email address"><br>
+        <!-- Add a line to display validation error -->
+        <div id="emailError" class="error-message"></div><br>
+
+
+    <label for="Account Region">3.Account's Region:</label><br>
+    <select name="Account's Region" id="Account Region">
+        <option value="" disabled selected>Select Region</option>
+        <option value="APAC">APAC</option>
+        <option value="DACH">DACH</option>
+        <option value="NCE">NCE</option>
+        <option value="NA">NA</option>
+        <option value="SCE">SCE</option>
+        <option value="NEU">NEU</option>
+        <option value="SEU">SEU</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <!-- Move the input element outside the <select> block -->
+    <input type="text" id="otherInput" style="display: none;" placeholder="Enter your region">
+    <br><br>
+
+        </select>
+        <br><br>
+
+        <label for="Account Sub Region">4.Account's Sub Region:</label><br>
+        <select name="Account's Sub Region" id="Account Sub Region">
+            <option value="" disabled selected>Select Sub Region</option>
+            <option value="ANZ">ANZ</option>
+            <option value="Asia">Asia</option>
+            <option value="Belgium">Belgium</option>
+            <option value="Canada">Canada</option>
+            <option value="France">France</option>
+            <option value="Germany">Germany</option>
+            <option value="NL">NL</option>
+            <option value="Nordics">Nordics</option>
+            <option value="The UK">The UK</option>
+            <option value="The US">The US</option>
+            <option value="Other">Other</option>
+        </select>
+        <br><br>
+
+        <label for="account_for_uk">5.Select Account Name:</label><br>
+        <select name="account_for_uk" id="account_for_uk">
+            <option value="" disabled selected>Select UK Account</option>
+            <option value="ANGLIAN WATER SERVICES LTD">ANGLIAN WATER SERVICES LTD</option>
+            <option value="BRAKES">BRAKES</option>
+            <option value="BUPA INVESTMENTS LIMITED">BUPA INVESTMENTS LIMITED</option>
+            <option value="Direct Line Insurance">Direct Line Insurance</option>
+            <option value="DLG">DLG</option>
+            <option value="ESURE SERVICES LIMITED">ESURE SERVICES LIMITED</option>
+            <option value="HEATHROW AIRPORT LTD">HEATHROW AIRPORT LTD</option>
+            <option value="IAM INFRA">IAM INFRA</option>
+            <option value="MATALAN RETAIL LTD.">MATALAN RETAIL LTD.</option>
+            <option value="NETWORK RAIL">NETWORK RAIL</option>
+            <option value="SCOTTISH WATER">SCOTTISH WATER</option>
+            <option value="Utility Network">Utility Network</option>
+            <option value="Other">Other</option>
+        </select>
+            <br><br>
+
+        </div>
+
+        <label for="special_instructions">Special Instructions:</label><br>
+        <input type="text" id="special_instructions" name="special_instructions" required>
+        <!-- Add a line to display validation error -->
+        <div id="special_instructions_error" class="error-message">
+        </div>
+        <br>
+        <label for="myfile">Select a file:</label>
+        <input type="file" id="myfile" name="myfile" multiple><br><br>
+        <div class="ticket">
+        <button type="submit">Create Ticket</button>
+        <a href="/" class="back">Back-to-Home</a>
+        </div>
+
+    </form>
+<script>
+
+     document.addEventListener('DOMContentLoaded', function () {
+            var select = document.getElementById('Account Region');
+            var otherInput = document.getElementById('otherInput');
+
+            // Initial check to see if "Other" is selected on page load
+            if (select.value === 'Other') {
+                otherInput.style.display = 'block';
+            } else {
+                otherInput.style.display = 'none';
+            }
+
+            // Add event listener to the select element
+            select.addEventListener('change', function () {
+                // Check if the selected option is "Other"
+                if (select.value === 'Other') {
+                    otherInput.style.display = 'block';
+                } else {
+                    otherInput.style.display = 'none';
+                }
+            });
+        });
+    function validateForm() {
+        // Validate email
+        var email = document.getElementById('Demand_Owner_Automation_SPOC_E-mail_ID').value;
+        var emailError = document.getElementById('emailError');
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            emailError.innerHTML = 'Invalid email address';
+            return false;
+        } else {
+            emailError.innerHTML = '';
+        }
+
+        // Validate short description
+        var shortDescription = document.getElementById('short_description').value;
+        var shortDescriptionError = document.getElementById('shortDescriptionError');
+        var shortDescriptionRegex = /^[a-zA-Z0-9\s]+$/;
+
+        if (!shortDescriptionRegex.test(shortDescription)) {
+            shortDescriptionError.innerHTML = 'Only letters, numbers, and spaces are allowed';
+            return false;
+        } else {
+            shortDescriptionError.innerHTML = '';
+        }
+
+        // Validate demand owner name
+        var demandOwnerName = document.getElementById('Demand Owner/Automation SPOC Name').value;
+        var demandOwnerNameError = document.getElementById('demandOwnerNameError');
+        var demandOwnerNameRegex = /^[A-Za-z\s]+$/;
+
+        if (!demandOwnerNameRegex.test(demandOwnerName)) {
+            demandOwnerNameError.innerHTML = 'Only letters and spaces are allowed';
+            return false;
+        } else {
+            demandOwnerNameError.innerHTML = '';
+        }
+
+        // Validate special instructions
+        var specialInstructions = document.getElementById('special_instructions_').value;
+        var specialInstructionsError = document.getElementById('specialInstructionsError');
+        var specialInstructionsRegex = /^[A-Za-z\s]+$/;
+
+        if (!specialInstructionsRegex.test(specialInstructions)) {
+            specialInstructionsError.innerHTML = 'Only letters and spaces are allowed';
+            return false;
+        } else {
+            specialInstructionsError.innerHTML = '';
+        }
+        var specialInstructions = document.getElementById('special_instructions').value;
+        var specialInstructionsError = document.getElementById('special_instructions_error');
+        var specialInstructionsRegex = /^[A-Za-z\s]+$/;
+
+        if (!specialInstructionsRegex.test(specialInstructions)) {
+            specialInstructionsError.innerHTML = 'Only letters and spaces are allowed';
+        } else {
+            specialInstructionsError.innerHTML = '';
+        }
+
+
+        // If all validations pass, return true to submit the form
+        return true;
+    }
+
+
+
+    function updateDescription() {
+        // Get values from input fields
+        var demandOwnerName = document.getElementById('1.Demand Owner/Automation SPOC Name').value;
+        var demandOwnerEmail = document.getElementById('2.Demand Owner/Automation SPOC E-mail ID').value;
+        var accountRegion = document.getElementById('3.Account\'s Region').value;
+        var accountSubRegion = document.getElementById('4.Account\'s Sub Region').value;
+        var ukAccount = document.getElementById('5.Account - For The UK').value;
+
+        // Concatenate values and update the hidden input field
+        var descriptionValue = `1. Demand Owner/Automation SPOC Name: ${demandOwnerName}\n2. Demand Owner/Automation SPOC E-mail ID: ${demandOwnerEmail}\n3. Account's Region: ${accountRegion}\n4. Account's Sub Region: ${accountSubRegion}\n5. Account - For The UK: ${ukAccount}`;
+        document.getElementById('description').value = descriptionValue;
+    }
+    return true;
+</script>
+
+</body>
+</html>

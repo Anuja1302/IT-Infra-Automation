@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="title-icon">Chatbot</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            background-image: url({{ url_for('static', filename='create7_test8.png') }});
+            background-position: center;
+            background-size: 100% 100%;;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+<!--        h1 {-->
+<!--            color: #fff;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%);-->
+<!--            background-color: rgba(25, 25, 112, 0.8);-->
+<!--            padding: 15px 20px;-->
+<!--            border-bottom: 2px solid #ddd;-->
+<!--            width: 100%;-->
+<!--            z-index: 1;-->
+<!--            text-align: center;-->
+<!--            margin: 0;-->
+<!--            border-radius: 0 0 8px 8px;-->
+<!--            font-size: 24px;-->
+<!--        }-->
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            background-size: cover;
+        }
+
+        .user-input {
+            position: fixed;
+            background-color: rgba(25, 25, 112, 0.8);
+            color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            height: 70px;
+            width: 100%;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+
+
+         .result-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000;
+            margin-top: 55px;
+            margin-bottom: 65px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 175%;
+            box-sizing: border-box;
+            text-align: left;
+            word-wrap: break-word;
+            align-self: center;
+        }
+
+        .result-card.leo-response {
+            background-color: rgba(255, 255, 255, 1); /* Adjusted background color for bot messages */
+            margin-left: -50%; /* Align bot messages to the right */
+            width:150%;
+            margin-bottom: -10%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        input {
+            width: 700px;
+            height: 45px;
+            margin-left: 20px;
+            border-radius: 30px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            width: 130px;
+            height: 45px;
+            margin-left: 20px;
+            border-radius: 30px;
+            background-color: #008080;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Change color on hover */
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #0000FF;
+        }
+
+        .clear-screen-button:hover {
+            background-color: #0056b3; /* Change color on hover */
+        }
+
+        .flashes {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 1);
+            color:	#4285f4;
+            font-size: 18px;
+            font-family: Forum;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+
+            width:100%;
+
+         }
+
+        .search_button {
+            font-size: 12px;
+            width: 100px;
+            height: 30px;
+        }
+
+        .create_button {
+            font-size: 12px;
+            width: 100px;
+            height: 30px;
+        }
+
+        .user-input-container {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgba(25, 25, 112, 0.5);
+            color: #000;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .Check-Status {
+            width: 120px;
+            border-radius: 30px;
+            background-color: #008080;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .welcome-message {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .welcome-message h2 {
+            color: #008080;
+        }
+    </style>
+</head>
+<body>
+<!--<h1>C.R.E.A.T.E</h1>-->
+
+<div class="chat-container">
+    {% for entry in response_data %}
+        <div class="result-card {% if entry.Leo %}leo-response{% endif %}">
+            {% for key, value in entry.items() %}
+                {% if key == "User" %}
+                    <!-- Display user input -->
+                    <p><strong>{{ key }}:</strong> {{ value }}</p>
+                {% else %}
+                    {% if key not in ["User/Deployment Guide", "Source Code path", "Path"] %}
+                        {% if key in ["Fuctional Specification", "Design & Pre requisites doc"] %}
+                            <p><strong>{{ key }}:</strong> <a href="{{ value }}" target="_blank">{{ value }}</a></p>
+                        {% else %}
+                            <p><strong>{{ key }}:</strong> {{ value }}</p>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if "Please Click on create ticket button" in entry.Leo %}
+                <a href="create_ticket_form" class="create_button">Create a ticket</a>
+            {% endif %}
+
+            {% if "No match found Click on create ticket" in entry.Leo %}
+                <a href="create_ticket_form" class="create_button">Create a ticket</a>
+            {% endif %}
+
+
+            {% if "User/Deployment Guide" in entry and "Source Code path" in entry and "Path" in entry %}
+                <!-- Display buttons only if specific keys are present in the entry -->
+                <button type="button" class="search_button" onclick="searchButton()">search again</button>
+<!--                <a href="create_ticket_form" class="create_button">unable to find BOT-Create a ticket</a>-->
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% if not response_data %}
+        <p>
+            <!-- Here's where the flash messages go -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flashes">
+                        {% for message in messages %}
+                            <div class="flash">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+
+        <div class="container1">
+            <div class="arrow">
+                <div class="outer"></div>
+                <div class="inner"></div>
+            </div>
+            <div class="message-body">
+                <p></p>
+            </div>
+        </div>
+        <script>
+            showNoBotFound(); // Call the JavaScript function to show an alert
+        </script>
+    {% endif %}
+</div>
+
+<!-- Your existing form remains unchanged -->
+<form method="POST" action="/result" class="user-input">
+    <input type="text" id="user_input" name="user_input" required placeholder="Enter Your inputs here" autocomplete="off">
+    <button type="submit">Submit</button>
+    <button type="button" class="clear-screen-button" onclick="clearScreen()">Clear Screen</button>
+    <a href="ticket_status" class="Check-Status">Check-Status</a>
+
+</form>
+
+<script>
+    function searchButton() {
+        document.querySelector('.chat-container').innerHTML = '';
+    }
+
+    function clearScreen() {
+        document.querySelector('.chat-container').innerHTML = ''; // Clear the chat container
+    }
+
+    function showNoBotFound() {
+        alert("No bot found");
+    }
+</script>
+</body>
+</html>

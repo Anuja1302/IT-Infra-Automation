@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="title-icon">Chatbot</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            background-image: url({{ url_for('static', filename='create7_test8.png') }});
+            background-position: center;
+            background-size: 100% 100%;;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+
+<!--        h1 {-->
+<!--            color: #fff;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%);-->
+<!--            background-color: rgba(25, 25, 112, 0.8);-->
+<!--            padding: 15px 20px;-->
+<!--            border-bottom: 2px solid #ddd;-->
+<!--            width: 100%;-->
+<!--            z-index: 1;-->
+<!--            text-align: center;-->
+<!--            margin: 0;-->
+<!--            border-radius: 0 0 8px 8px;-->
+<!--            font-size: 24px;-->
+<!--        }-->
+
+        .user-input {
+            position: fixed;
+            background-color: rgba(25, 25, 112, 0.8);
+            color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            height: 70px;
+            width: 100%;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+
+
+
+
+        input {
+            width: 700px;
+            height: 45px;
+            margin-left: 20px;
+            border-radius: 30px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+
+        button {
+            width: 130px;
+            height: 45px;
+            margin-left: 20px;
+            border-radius: 30px;
+            background-color: #008080;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Change color on hover */
+        }
+
+        .search_button {
+            font-size: 12px;
+            width: 100px;
+            height: 30px;
+        }
+
+        .create_button {
+            font-size: 12px;
+            width: 100px;
+            height: 30px;
+        }
+
+        .user-input-container {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgba(25, 25, 112, 0.5);
+            color: #000;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .button-container {
+            height: auto;
+            width: 80%; /* Set the width to 80% of the parent container */
+            margin: 20px auto; /* Center the container with some top and bottom margin */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around; /* Adjust to your preference */
+            gap: 20px; /* Adjust the gap between buttons */
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
+        }
+
+        .button {
+            width: calc(30% - 10px);
+            margin-bottom: 10px; /* Add margin between buttons */
+            padding: 10px;
+            text-align: center;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            transform: perspective(1px) translateZ(0);
+            transition: all 0.5s;
+        }
+
+        .back-button,
+        .Check-Status {
+            width: calc(30% - 10px);
+            margin-bottom: 10px; /* Add margin between buttons */
+            padding: 10px;
+            text-align: center;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            transform: perspective(1px) translateZ(0);
+            transition: all 0.5s;
+        }
+
+<!--        .button-container {-->
+<!--            height: auto;-->
+<!--            width: 100%;-->
+<!--            display: flex;-->
+<!--            flex-wrap: wrap;-->
+<!--            justify-content: center;-->
+<!--            gap: 10px;-->
+<!--            background-color: #ffffff;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .button {-->
+<!--            width: calc(30% - 10px);-->
+<!--            padding: 10px;-->
+<!--            text-align: center;-->
+<!--            background-color: #3498db;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 14px;-->
+<!--            border-radius: 5px;-->
+<!--            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);-->
+<!--            transform: perspective(1px) translateZ(0);-->
+<!--            transition: all 0.5s;-->
+<!--        }-->
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        .hidden {
+            display: block;
+            animation: slideIn 0.5s forwards;
+        }
+<!--        .back-button,.Check-Status{-->
+<!--            width: calc(30% - 10px);-->
+<!--            padding: 10px;-->
+<!--            text-align: center;-->
+<!--            background-color: #3498db;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 14px;-->
+<!--            border-radius: 5px;-->
+<!--            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);-->
+<!--            transform: perspective(1px) translateZ(0);-->
+<!--            transition: all 0.5s;-->
+<!--        }-->
+
+    </style>
+</head>
+<body>
+<!--<h1>C.R.E.A.T.E</h1>-->
+    <div class="button-container">
+        <div class="button1">
+        <h3>Please select the % range matching with your Bot</h3>
+<!--        <button class="button" onclick="window.location.href='/create_ticket_form'">10% - 20%</button>-->
+<!--        <button class="button" onclick="window.location.href='/create_ticket_form'">21% - 30%</button>-->
+<!--        <button class="button" onclick="window.location.href='/create_ticket_form'">31% - 40%</button>-->
+        <button class="button" onclick="window.location.href='/create_ticket_form'">41% - 50%</button>
+        <button class="button" onclick="window.location.href='/create_ticket_form'">51% - 60%</button>
+        <button class="button" onclick="window.location.href='/create_ticket_form'">61% - 70%</button>
+        <button class="button"onclick="window.location.href='/create_ticket_form'">71% - 80%</button>
+        <button class="button"onclick="window.location.href='/create_ticket_form'">81% - 90%</button>
+        <button class="button"onclick="window.location.href='/Redeployemt_ticket_form'">91% - 100%</button>
+        </div>
+    </div>
+
+<!-- Your existing form remains unchanged -->
+<form method="POST" action="/result" class="user-input">
+
+    <a href="/" class="back-button">Back to Home</a>
+    <a href="ticket_status" class="Check-Status">Check-Status</a>
+</form>
+
+<script>
+    function searchButton() {
+        document.querySelector('.chat-container').innerHTML = '';
+    }
+
+    function clearScreen() {
+        document.querySelector('.chat-container').innerHTML = ''; // Clear the chat container
+    }
+
+    function showNoBotFound() {
+        alert("No bot found");
+    }
+</script>
+</body>
+</html>

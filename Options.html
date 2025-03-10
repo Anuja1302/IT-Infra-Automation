@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceNow Ticket Options</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            background-image: url({{ url_for('static', filename='create7_test8.png') }});
+            background-position: center;
+            background-size: 100% 100%;;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+        }
+
+        h1 {
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(25, 25, 112, 0.5);
+            padding: 15px 20px;
+            border-bottom: 2px solid #ddd;
+            width: 100%;
+            z-index: 1;
+            text-align: center;
+            margin: 0;
+            border-radius: 0 0 8px 8px;
+            font-size: 24px;
+        }
+
+        .container {
+            box-border: 2px;
+
+            background-color: rgba(174, 214, 241, 0.8);
+            font-size: 18px;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            width: 80%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        a {
+            display: block;
+            width: 95%;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            margin: 10px 0;
+            margin-left:10;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #FF3399;
+        }
+
+        .back-button {
+            background-color: rgba(215, 219, 221);
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .options-list li {
+            margin: 10px 0;
+        }
+        legend{
+        font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>C.R.E.A.T.E</h1>
+    <div class="container">
+        <fieldset>
+
+            <form action="{{ url_for('Options_result') }}" method="post">
+            <input type="hidden" name="platform" value="{{ platform }}">
+
+            <ul class="options-list">
+                <legend>Please select the Options for {{ platform }}:</legend><br>
+                {% if 'windows' in platform.lower() or 'linux' in platform.lower() or 'redhat' in platform.lower() or 'oracle' in platform.lower() or 'sql' in platform.lower() or 'sccm' in platform.lower() %}
+                    <!-- Content for package1 -->
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Health-check') }}"> {{ platform }} Health-check</a></li>
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Patching') }}"> {{ platform }} Patching</a></li>
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Log Purging') }}"> {{ platform }} Log Purging</a></li>
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Uptime Report') }}"> {{ platform }} Uptime Report</a></li>
+                    <li><a href="{{ url_for('index') }}">I will Enter My requirement Myself</a></li>
+
+
+                {% elif 'health check' in platform.lower() or 'patching' in platform.lower() or 'log purging' in platform.lower() or 'uptime report' in platform.lower() %}
+                    <!-- Content for package2 -->
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Windows') }}"> {{ platform }} Windows</a></li>
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Oracle') }}"> {{ platform }} Oracle</a></li>
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Linux') }}"> {{ platform }} Linux</a></li>
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='Redhat') }}"> {{ platform }} Redhat</a></li>
+                    <li><a href="{{ url_for('Options_result', platform=platform, request_type='SQL') }}"> {{ platform }} SQL</a></li>
+                    <li><a href="{{ url_for('index') }}">I will Enter My requirement Myself</a></li>
+                {% endif %}
+
+                <li><a href="/" class="back-button">Back-to-Home</a></li>
+            </ul>
+            </form>
+        </fieldset>
+    </div>
+    <script>
+    // JavaScript for handling link clicks and redirection
+    document.querySelectorAll('.options-list a').forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+            window.location.href = this.href; // Redirect to the link's href
+        });
+    });
+    </script>
+</body>
+</html>

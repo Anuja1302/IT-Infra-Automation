@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceNow Ticket Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            background-image: url({{ url_for('static', filename='create7_test8.png') }});
+            background-position: center;
+            background-size: 100% 100%;;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+        }
+
+<!--        h1 {-->
+<!--            color: #fff;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%);-->
+<!--            background-color: rgba(25, 25, 112, 0.5);-->
+<!--            padding: 15px 20px;-->
+<!--            border-bottom: 2px solid #ddd;-->
+<!--            width: 100%;-->
+<!--            z-index: 1;-->
+<!--            text-align: center;-->
+<!--            margin: 0;-->
+<!--            border-radius: 0 0 8px 8px;-->
+<!--            font-size: 24px;-->
+<!--        }-->
+
+        .ticket-result {
+            box-border: 2px;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 36;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+             width: 220px;
+            border-radius: 30px;
+            background-color: #008080;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            position: absolute;
+            bottom: 20px;
+            margin-left:80px;
+        }
+
+        .Options {
+            box-sizing: border-box;
+            text-align: left;
+            word-wrap: break-word;
+            align-self: center;
+            position: relative;
+            margin-top: 10px; /* Adjust as needed */
+
+        }
+<!--        .container{-->
+<!--        box-border: 2px;-->
+<!--            background-color: rgba(25, 25, 112, 0.8);-->
+<!--            font-size: 36;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 6px;-->
+<!--            margin-bottom: 10px;-->
+
+<!--        }-->
+
+    </style>
+</head>
+<body>
+<!--    <h1>C.R.E.A.T.E</h1>-->
+    <div class="container">
+    <div class="ticket-result">
+        <p>{{ ticket_response }}</p>
+        <!-- Display ticket creation result here -->
+    </div><br><br><br><br>
+
+    <!-- Add a link to return to the main page or wherever needed -->
+    <div class="Options">
+        <a href="/" class="back-button">Back to Home</a>
+
+        </div>
+    </div>
+
+</body>
+</html>

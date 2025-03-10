@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create_ticket</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            background-image: url({{ url_for('static', filename='create7_test8.png') }});
+            background-position: center;
+            background-size: 100% 100%;;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+<!--        h1 {-->
+<!--            color: #fff;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 50%;-->
+<!--            transform: translateX(-50%);-->
+<!--            background-color: rgba(25, 25, 112, 0.5);-->
+<!--            padding: 15px 20px;-->
+<!--            border-bottom: 2px solid #ddd;-->
+<!--            width: 100%;-->
+<!--            z-index: 1;-->
+<!--            text-align: center;-->
+<!--            margin: 0;-->
+<!--            border-radius: 0 0 8px 8px;-->
+<!--            font-size: 24px;-->
+<!--        }-->
+        form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            box-sizing: border-box;
+            text-align: left;
+            word-wrap: break-word;
+            margin-top: 50px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-left:230px;
+            width: 40%;
+            height: 40px;
+            border-radius: 30px;
+            background-color: #008080;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back{
+            color: #cyan;
+            margin-left:360px;
+            margin-top:50px;
+            font-size: 12px;
+        }
+        .manually_scheduled{
+          opacity: 0;
+          cursor: pointer;
+          height: 2em;
+          width: 0;
+
+        }
+    </style>
+
+</head>
+<body>
+<!--    <h1>C.R.E.A.T.E</h1>-->
+
+    <form method="POST" action="/create_ticket" class="ticket-form" enctype="multipart/form-data">
+        <label for="Bot_reference_ID" >Bot Reference ID:</label><br>
+        <input type="text" id="Bot_reference_ID" value="{{id_value}}" name="Bot_reference_ID" readonly>
+        <div id="BotreferenceIDer" class="error-message"></div>
+        <br>
+        <label for="short_description">Short Description</label><br>
+        <input type="text" id="short_description" name="short_description" required autocomplete="off"><br>
+        <div id="description">
+        <label for="account_name">Account Name:</label><br>
+        <input type="text" id="account_name" name="account_name" required autocomplete="off"><br>
+            <label for="Account Region">3.Account's Region:</label><br>
+        <select name="Account's Region" id="Account Region">
+            <option value="" disabled selected>Select Region</option>
+            <option value="APAC">APAC</option>
+            <option value="DACH">DACH</option>
+            <option value="NCE">NCE</option>
+            <option value="NA">NA</option>
+            <option value="SCE">SCE</option>
+            <option value="NEU">NEU</option>
+            <option value="SEU">SEU</option>
+            <option value="Other">Other</option>
+        </select>
+        <label for="account_spoc_details">Account SPOC details (complete Email ID):</label><br>
+        <input type="text" id="account_spoc_details" name="account_spoc_details" required><br>
+        <label for="trigger_location">From where the bot will be triggered ?</label><br>
+        <input type="text" id="trigger_location" name="trigger_location" required autocomplete="off"><br>
+        <label for="ras_server">Is JUMP/RAS server available and does it have Internet Connectivity ?</label><br>
+        <select name="ras_server" id="ras_server" autocomplete="off">
+            <option value="" disabled selected>Select Required Options</option>
+            <option value="Available with internet">Available with internet</option>
+            <option value="Available without internet">Available without internet</option>
+            <option value="Not available">Not available</option>
+        </select><br>
+        <label for="whitelist_links">In case, Jump server does not have internet connectivity, is it possible to whitelist few links for installing required modules?</label><br>
+        <select name="whitelist_links" id="whitelist_links" autocomplete="off">
+            <option value="" disabled selected>Select Required Options</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="N/A">N/A</option>
+        </select><br>
+        <label for="test_environment">Is test environment available ?</label><br>
+        <select name="test_environment" id="test_environment" autocomplete="off">
+            <option value="" disabled selected>Select Required Options</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+        <label for="authentication_required">If there is any authentication required, can a service account be arranged while testing & deployment ?</label><br>
+        <select name="authentication_required" id="authentication_required" autocomplete="off">
+            <option value="" disabled selected>Select Required Options</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="N/A">N/A</option>
+        </select><br>
+        <label for="api_call_required">If API call to access details from any 3rd party software is needed, could API creds and instance be arranged while testing & deployment ? (Avaya API)</label><br>
+        <select name="api_call_required" id="api_call_required" autocomplete="off">
+            <option value="" disabled selected>Select Required Options</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="N/A">N/A</option>
+        </select><br>
+        <label for="select_language">Please select/provide the development language for this automation: </label><br>
+            <select name="api_call_required" id="select_language" autocomplete="off">
+            <option value="" disabled selected>Select Required Options</option>
+            <option value="Python 3.11">Python 3.11</option>
+            <option value="PowerShell 5.x">PowerShell 5.x</option>
+            <option value="Ansible">Ansible</option>
+            <option value="N/A">N/A</option>
+        </select><br>
+        <label for="manually_scheduled">Will the BOT run manually or be scheduled</label><br>
+        <select name="manually_scheduled" id="manually_scheduled" autocomplete="off">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+        <label for="requested_language">Is the developed and requested language same</label><br>
+        <select name="requested_language" id="requested_language" autocomplete="off">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+        <label for="Copying_BOT">Process of Copying the BOT to client environment</label><br>
+        <select name="Copying_BOT" id="Copying_BOT" autocomplete="off">
+            <option value="" disabled selected>Select Required Options</option>
+            <option value="UAT Support">UAT Support</option>
+            <option value="D&T Support">D&T Support</option>
+        </select><br>
+
+
+
+
+        <!-- Add more questions here as needed -->
+        </div>
+        <label for="special_instructions">Special Instructions:</label><br>
+        <input type="text" id="special_instructions" name="special_instructions" required autocomplete="off">
+
+        <label for="myfile">Select a file:</label>
+        <input type="file" id="myfile" name="myfile" multiple><br><br>
+
+        <button type="submit" id="submit-button">Create Ticket</button>
+        <a href="/" class="back">Back-to-Home</a>
+    </form>
+    <script>
+    function disableSubmitButton() {
+    const submitButton = document.getElementById('submit-button');
+    if (submitButton.classList.contains('disabled')) {
+        // Button is already disabled, prevent further action
+        return false;
+    }
+
+    submitButton.classList.add('disabled'); // Add a class to indicate disabled
+    submitButton.disabled = true; // Disable the button
+    return true; // Allow form submission
+}
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
