@@ -1,0 +1,83 @@
+#!/usr/bin/expect
+ 
+# Set timeout for expect commands
+set timeout 20
+ 
+# Get the key from the command-line arguments
+set key [lindex $argv 0]
+ 
+# Define variables
+set ssh_user "nscsegs"
+set encrypted_pass "U2FsdGVkX18ZBG8Y+IaL7LSewGuUI3T3syqWCswFLY4="
+set server_ips {"grllbpcip1" "nhqlbpcip1"}
+set partition_files {"final_grllbpcip1_partitions.txt" "final_nhqlbpcip1_partitions.txt"}
+ 
+# Create temporary file paths
+set tmp_file "/tmp/encrypted_pass.txt"
+set decrypted_file "/tmp/decrypted_pass.txt"
+ 
+# Write the encrypted password to a temporary file
+set fp [open $tmp_file w]
+puts $fp $encrypted_pass
+close $fp
+ 
+# Decrypt the password using OpenSSL
+exec openssl enc -aes-256-cbc -d -a -salt -pass pass:$key -in $tmp_file -out $decrypted_file
+ 
+# Read the decrypted password
+set fp [open $decrypted_file r]
+set decrypted_pass [read $fp]
+close $fp
+ 
+# Trim newline characters from the decrypted password
+set decrypted_pass [string trim $decrypted_pass]
+ 
+# Function to run the serviceGroup command with the list of partition-ports
+proc run_service_group_commands {server_ip partition_file decrypted_pass ssh_user} {
+    # Read the partition-port names from the file
+    set fp [open $partition_file r]
+    set partition_port_list [split [read $fp] "\n"]
+    close $fp
+ 
+    if {[llength $partition_port_list] == 0} {
+        puts "No partition-port pairs found to process for server: $server_ip"
+        return
+    }
+ 
+    foreach partition_port $partition_port_list {
+        # Skip empty lines
+        if {[string length $partition_port] == 0} {
+            continue
+        }
+ 
+        puts "Running serviceGroup command for: $partition_port"
+ 
+        # Spawn SSH session for each partition-port pair
+        spawn ssh -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 -o StrictHostKeyChecking=no $ssh_user@$server_ip "show serviceGroup $partition_port"
+ 
+        expect {
+            "password:" {
+                send "$decrypted_pass\r"
+                exp_continue
+            }
+            -re "serviceGroup.*" {
+                # Capture the output here (optional)
+                exp_continue
+            }
+            eof {
+                # Close the SSH session and continue to the next partition-port
+                puts "Finished processing $partition_port"
+            }
+        }
+    }
+}
+ 
+# Iterate over the server IPs and corresponding partition files
+for {set i 0} {$i < [llength $server_ips]} {incr i} {
+    set server_ip [lindex $server_ips $i]
+    set partition_file [lindex $partition_files $i]
+    run_service_group_commands $server_ip $partition_file $decrypted_pass $ssh_user
+}
+ 
+# Clean up temporary files
+exec rm -f $tmp_file $decrypted_file
